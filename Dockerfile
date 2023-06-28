@@ -8,11 +8,6 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install and configure jupyter lab.
 COPY jupyter_notebook_config.json /opt/conda/etc/jupyter/jupyter_notebook_config.json
 
-# install conda environment
-RUN conda config --add channels bioconda && \
-    conda config --add channels conda-forge \
-    && mamba install ipywidgets jupyterlab_widgets kallisto -y
-
 #intstall fastx
 RUN mkdir fastx_bin \
     && wget -O fastx_bin/fastx_toolkit_0.0.13_binaries_Linux_2.6_amd64.tar.bz2 http://hannonlab.cshl.edu/fastx_toolkit/fastx_toolkit_0.0.13_binaries_Linux_2.6_amd64.tar.bz2 \
@@ -28,13 +23,17 @@ RUN jupyter lab build
 
 USER jovyan
 
-#pull openmp
+# install conda environment
+RUN conda config --add channels bioconda && \
+    && mamba install ipywidgets jupyterlab_widgets kallisto -y
+
+#Clone OpenMPTraining
 RUN git clone https://github.com/pdewan/OpenMPTraining.git /home/jovyan/OpenMPTraining
 
-#pull dylan_plugin
+#Clone llvm-instr
 RUN git clone https://github.com/dylanjtastet/llvm-instr /home/jovyan/llvm-instr 
 
-#Clone SuperShell and run install script
+#Clone SuperShell and run install scripts
 RUN cd /home/jovyan && \
     git clone -b CyverseLogging-v1.1 https://github.com/pdewan/SuperShell.git  && \
     cd /home/jovyan/SuperShell/DockerSuperShell/SuperShellV2/ && ls && \
