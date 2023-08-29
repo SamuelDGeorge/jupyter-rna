@@ -24,27 +24,14 @@ RUN jupyter lab build
 USER jovyan
 
 # install conda environment
-RUN conda config --add channels bioconda && \
+RUN conda config --add channels bioconda \
     && mamba install ipywidgets jupyterlab_widgets kallisto -y
 
-#Clone OpenMPTraining
-RUN git clone https://github.com/pdewan/OpenMPTraining.git /home/jovyan/OpenMPTraining
-
-#Clone llvm-instr
-RUN git clone https://github.com/dylanjtastet/llvm-instr /home/jovyan/llvm-instr 
-
-#Clone SuperShell and run install scripts
-RUN cd /home/jovyan && \
-    git clone -b CyverseLogging-v1.1 https://github.com/pdewan/SuperShell.git  && \
-    cd /home/jovyan/SuperShell/DockerSuperShell/SuperShellV2/ && ls && \
-    chmod 755 cyverse_install.sh && \
-    chmod 755 push_events.sh && \
-    ./cyverse_install.sh 
-    #cd && source /home/jovyan/.bash_profile
-
-#intstall fastx matching script
-RUN mkdir -p /home/jovyan/fastx_full/
-COPY fastx_full.sh /home/jovyan/fastx_full/
+#Clone SuperShell and Prepare to Install
+RUN git clone -b CyverseLogging-v1.1 https://github.com/pdewan/SuperShell.git /home/jovyan/RawSuper \ 
+    && cp -r /home/jovyan/RawSuper/DockerSuperShell/SuperShellV2 /home/jovyan/SuperShell \
+    && rm -r /home/jovyan/RawSuper \
+    && chmod -R 755 /home/jovyan/SuperShell
 
 # Entrypoint is already set in base container, examples retained below:
 #
