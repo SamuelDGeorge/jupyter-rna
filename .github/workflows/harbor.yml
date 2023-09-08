@@ -39,17 +39,9 @@ jobs:
         uses: docker/build-push-action@v4.1.1
         with:
           context: latest 
-          file: latest/Dockerfile
+          file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: harbor.cyverse.org/vice/jupyter/supershell:3.6.1
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
