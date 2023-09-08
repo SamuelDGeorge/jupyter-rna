@@ -35,11 +35,11 @@ jobs:
           password: ${{ secrets.HARBOR_PASSWORD }}
       
       - name: Build and push 3.6.1
-        id: docker_build_latest
+        id: docker_build_v3.6.1
         uses: docker/build-push-action@v4.1.1
         with:
           context: v3.6.1
-          file: latest/Dockerfile
+          file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: harbor.cyverse.org/vice/jupyter/supershell:3.6.1
