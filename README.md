@@ -19,4 +19,3 @@ docker pull harbor.cyverse.org/vice/jupyter/supershell:3.6.1
 ```{bash}
 docker run -it --rm -p 8888:8888 harbor.cyverse.org/vice/jupyter/supershell:3.6.1
 ```
-
