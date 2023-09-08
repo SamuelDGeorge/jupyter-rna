@@ -2,7 +2,7 @@ name: harbor
 
 on:
   push:
-    branches: main
+    branches: cyverse-vice
 
 jobs:
   
